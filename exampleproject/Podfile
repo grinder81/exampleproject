@@ -1,0 +1,22 @@
+platform :ios, '11.0'
+use_frameworks!
+inhibit_all_warnings!
+
+target 'exampleproject' do
+  
+    pod 'RxSwift'
+    pod 'RxCocoa'
+    pod 'RxSwiftExt'
+    pod 'RxGesture'
+
+    pod 'Alamofire'
+    pod 'Moya'
+    pod 'Moya/RxSwift'
+
+    # Realm
+    pod 'RealmSwift'
+    pod 'RxRealm'
+    pod 'Moya-ObjectMapper/RxSwift'
+    
+end
+
