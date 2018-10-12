@@ -36,49 +36,26 @@ final class RealmDataService: DataService {
             fatalError(error.localizedDescription)
         }
     }
-    
+    // TODO: WARNING you can't use GCD to register notification on Realm
+    // Only way to do using RunLoop which mean Own thread.
     func observeOne<T: Serializable>(_ targetType: T.Type) -> Observable<T?> {
-        return Observable<T?>.create { (observer) -> Disposable in
-                if let realm = try? Realm(), let rlmType = targetType.Element.self as? Object.Type {
-                    var object: Object?
-                    try! realm.write {
-                        object = realm.objects(rlmType).first
-                    }
-                    if let rlmObject = object {
-                        observer.onNext(targetType.init(type: rlmObject))
-                        observer.onCompleted()
-                    } else {
-                        observer.onError(DataError.WrongCasting(#file))
-                    }
-                } else {
-                    observer.onError(DataError.InvalidData)
-                }
-                return Disposables.create()
-            }
-            .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
-            .observeOn(MainScheduler.asyncInstance)
+        if let realm = try? Realm(), let rlmType = targetType.Element.self as? Object.Type {
+            return realm.objects(rlmType).asObservable()
+                .map{ $0.first }
+                .unwrap()
+                .map{ targetType.init(type: $0) }
+                .observeOn(MainScheduler.asyncInstance)
+        }
+        return Observable.error(DataError.WrongCasting(#file))
     }
     
     func observeAll<T: Serializable>(_ targetType: T.Type) -> Observable<[T?]> {
-        return Observable<[T?]>.create { (observer) -> Disposable in
-                if let realm = try? Realm(), let rlmType = targetType.Element.self as? Object.Type {
-                    var objects: Results<Object>?
-                    try! realm.write {
-                        objects = realm.objects(rlmType)
-                    }
-                    if let rlmObjects = objects {
-                        observer.onNext(rlmObjects.map{ targetType.init(type: $0)} )
-                        observer.onCompleted()
-                    } else {
-                        observer.onError(DataError.WrongCasting(#file))
-                    }
-                } else {
-                    observer.onError(DataError.InvalidData)
-                }
-                return Disposables.create()
-            }
-            .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
-            .observeOn(MainScheduler.asyncInstance)
+        if let realm = try? Realm(), let rlmType = targetType.Element.self as? Object.Type {
+            return realm.objects(rlmType).asObservable()
+                .map{ $0.map{ targetType.init(type: $0) } }
+                .observeOn(MainScheduler.asyncInstance)
+        }
+        return Observable.error(DataError.WrongCasting(#file))
     }
 }
 

@@ -18,7 +18,7 @@ protocol Serializable {
 
 protocol DataService {
     func observeOne<T: Serializable>(_ targetType: T.Type) -> Observable<T?>
-    func observeAll<T: Serializable>(_ type: T.Type) -> Observable<[T?]>
+    func observeAll<T: Serializable>(_ targetType: T.Type) -> Observable<[T?]>
 }
 
 public enum DataError: Swift.Error {

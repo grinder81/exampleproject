@@ -36,6 +36,7 @@ class ViewController: UIViewController {
             .disposed(by: bag)
         
         dataService.observeAll(Source.self)
+            .debug()
             .subscribe(onNext: { (sources) in
                 print("Loaded count: \(sources.count)")
             })
