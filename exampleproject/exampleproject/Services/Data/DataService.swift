@@ -16,8 +16,17 @@ protocol Serializable {
     init?(type: Object)
 }
 
+enum Result<T> {
+    case success(T)
+    case failure(Swift.Error)
+}
+
+
 protocol DataService {
-    func observeOne<T: Serializable>(_ targetType: T.Type) -> Observable<T?>
+    func readFirst<T: Serializable>(_ targetType: T.Type, callBack:  @escaping (Result<T?>) -> Void)
+    func readAll<T: Serializable>(_ targetType: T.Type, callBack:  @escaping (Result<[T?]>) -> Void)
+    
+    func observeFirst<T: Serializable>(_ targetType: T.Type) -> Observable<T?>
     func observeAll<T: Serializable>(_ targetType: T.Type) -> Observable<[T?]>
 }
 

@@ -36,9 +36,45 @@ final class RealmDataService: DataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    func readFirst<T>(_ targetType: T.Type, callBack: @escaping (Result<T?>) -> Void) where T : Serializable {
+        DispatchQueue.global(qos: .utility).async {
+            var object: T?
+            if let realm = try? Realm(),
+                let rlmType = targetType.Element.self as? Object.Type,
+                let targetObject = realm.objects(rlmType).first {
+                object = targetType.init(type: targetObject)
+                DispatchQueue.main.async {
+                    callBack(.success(object))
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                callBack(.failure(DataError.InvalidData))
+            }
+        }
+    }
+    
+    func readAll<T>(_ targetType: T.Type, callBack: @escaping (Result<[T?]>) -> Void) where T : Serializable {
+        DispatchQueue.global(qos: .utility).async {
+            var objects: [T?] = []
+            if let realm = try? Realm(),
+                let rlmType = targetType.Element.self as? Object.Type {
+                objects = realm.objects(rlmType).map{ targetType.init(type: $0) }
+                DispatchQueue.main.async {
+                    callBack(.success(objects))
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                callBack(.failure(DataError.InvalidData))
+            }
+        }
+    }
+    
     // TODO: WARNING you can't use GCD to register notification on Realm
     // Only way to do using RunLoop which mean Own thread.
-    func observeOne<T: Serializable>(_ targetType: T.Type) -> Observable<T?> {
+    func observeFirst<T: Serializable>(_ targetType: T.Type) -> Observable<T?> {
         if let realm = try? Realm(), let rlmType = targetType.Element.self as? Object.Type {
             return realm.objects(rlmType).asObservable()
                 .map{ $0.first }

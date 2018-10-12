@@ -28,15 +28,14 @@ class ViewController: UIViewController {
             .disposed(by: bag)
 
         // Observe the data and consume it
-        dataService.observeOne(Source.self)
-            .debug()
+        
+        dataService.observeFirst(Source.self)
             .subscribe(onNext: { (source) in
                 print(source)
             })
             .disposed(by: bag)
         
         dataService.observeAll(Source.self)
-            .debug()
             .subscribe(onNext: { (sources) in
                 print("Loaded count: \(sources.count)")
             })
