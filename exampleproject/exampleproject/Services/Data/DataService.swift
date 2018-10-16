@@ -23,6 +23,8 @@ enum Result<T> {
 
 
 protocol DataService {
+    func writeAll<T: Serializable>(from jsonArray: [[String: Any]], with targetType: T.Type) throws
+    
     func readFirst<T: Serializable>(_ targetType: T.Type, callBack:  @escaping (Result<T?>) -> Void)
     func readAll<T: Serializable>(_ targetType: T.Type, callBack:  @escaping (Result<[T?]>) -> Void)
     
@@ -30,7 +32,10 @@ protocol DataService {
     func observeAll<T: Serializable>(_ targetType: T.Type) -> Observable<[T?]>
 }
 
-public enum DataError: Swift.Error {
-    case InvalidData
-    case WrongCasting(String)
+public enum DataError: Error {
+    case invalidData
+    case wrongCasting(String)
+    case parsingError
+    case databaseError
+    case none
 }

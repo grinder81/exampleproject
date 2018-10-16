@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Make network call
-        apiService.getSources()
+        apiService.getSources(Source.self)
             .subscribe()
             .disposed(by: bag)
 

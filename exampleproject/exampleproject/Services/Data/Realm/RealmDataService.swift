@@ -50,7 +50,7 @@ final class RealmDataService: DataService {
                 return
             }
             DispatchQueue.main.async {
-                callBack(.failure(DataError.InvalidData))
+                callBack(.failure(DataError.invalidData))
             }
         }
     }
@@ -67,7 +67,7 @@ final class RealmDataService: DataService {
                 return
             }
             DispatchQueue.main.async {
-                callBack(.failure(DataError.InvalidData))
+                callBack(.failure(DataError.invalidData))
             }
         }
     }
@@ -82,7 +82,7 @@ final class RealmDataService: DataService {
                 .map{ targetType.init(type: $0) }
                 .observeOn(MainScheduler.asyncInstance)
         }
-        return Observable.error(DataError.WrongCasting(#file))
+        return Observable.error(DataError.wrongCasting(#file))
     }
     
     func observeAll<T: Serializable>(_ targetType: T.Type) -> Observable<[T?]> {
@@ -91,17 +91,84 @@ final class RealmDataService: DataService {
                 .map{ $0.map{ targetType.init(type: $0) } }
                 .observeOn(MainScheduler.asyncInstance)
         }
-        return Observable.error(DataError.WrongCasting(#file))
+        return Observable.error(DataError.wrongCasting(#file))
+    }
+    
+    func writeAll<T>(from jsonArray: [JSON], with targetType: T.Type) throws where T : Serializable {
+        if let realm = try? Realm(), let mappable = targetType.Element.self as? Mappable.Type {
+            let rlmModels = jsonArray.map { (dictionary) -> Object? in
+                let map = Map(mappingType: .fromJSON, JSON: dictionary)
+                let object = mappable.init(map: map)
+                return object as? Object
+                }.compactMap { $0 }
+            do {
+                try realm.write {
+                    realm.add(rlmModels, update: true)
+                }
+            } catch {
+                throw error
+            }
+        } else {
+            throw DataError.wrongCasting(#file)
+        }
+    }
+    
+    private func writeModel<T: Object>(_ model: T, synchronous: Bool = false) {
+        let update = {
+            let realm = try! Realm()
+            try! realm.write({
+                realm.add(model, update: true)
+            })
+        }
+        if synchronous {
+            update()
+        } else {
+            DispatchQueue.global(qos: .utility).async {
+                update()
+            }
+        }
     }
 }
 
-extension Observable where E: Sequence, E.Iterator.Element: Object {
-    func writeModels() -> Observable<Element> {
-        return self.do(onNext: { (models) in
-            let realm = try! Realm()
-            try! realm.write {
-                realm.add(models, update: true)
-            }
-        })
-    }
-}
+//extension Observable where E: Sequence, E.Iterator.Element: Object {
+//    func writeModels() -> Observable<Element> {
+//        return self.do(onNext: { (models) in
+//            let realm = try! Realm()
+//            try! realm.write {
+//                realm.add(models, update: true)
+//            }
+//        })
+//    }
+//}
+
+//extension Observable where Element == Response {
+//    func writeModels<T>(_ type: T.Type, atKeyPath: String? = nil) -> Observable<T> where T: BaseMappable {
+//        return self.map{ try? JSONSerialization.jsonObject(with: $0.data, options: []) }
+//            .map({ (json) -> T? in
+//                guard let json = json as? [String: Any] else { return nil }
+//                if let keyPath = atKeyPath, let keyPathJSON = json[keyPath] as? [String: Any] {
+//                    return type.init(JSON: keyPathJSON)
+//                }
+//                return type.init(JSON: json)
+//            })
+//            .do(onNext: { (model) in
+//                
+//            }).unwrap()
+//    }
+//}
+
+
+//extension Observable where Element == Response {
+//    func writeModels<T>(using dataService: DataService, for type: T.Type, atKeyPath: String? = nil) -> Observable<Bool> where T: Serializable {
+//        return self.map({ (response) -> Bool in
+//            if let data = try JSONSerialization.jsonObject(with: response.data, options: []) as? [String: Any], let source =  data["sources"] as? [[String: Any]], let mappable = type.Element.self as? Mappable.Type {
+//                let array = source.map { (dictionary) -> Mappable? in
+//                    let map = Map(mappingType: .fromJSON, JSON: dictionary)
+//                    let object = mappable.init(map: map)
+//                    return object
+//                }
+//            }
+//            return true
+//        })
+//    }
+//}

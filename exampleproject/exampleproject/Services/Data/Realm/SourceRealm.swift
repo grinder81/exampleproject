@@ -21,6 +21,7 @@ class SourceRealm: Object {
     
     required convenience init?(map: Map) {
         self.init()
+        self.mapping(map: map)
     }
     
     override static func primaryKey() -> String {
