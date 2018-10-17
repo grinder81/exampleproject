@@ -23,21 +23,36 @@ let GoogleNewsEnv = GoogleNewsSettings(
     apiKey: "1944816ba04b445c9264dbb74f4e5b32")
 
 protocol GoogleNewsAPIService {
-    func getSources<T: Serializable>(_ targetType: T.Type, atKeyPath: String?) -> Observable<Bool>
+    func getSources<T: Serializable>(_ targetType: T.Type) -> Observable<Bool>
+    func getHealines<T: Serializable>(_ targetType: T.Type) -> Observable<Bool>
 }
 
 final class GoogleNewsAPI {
     private let dataServiceProvider: DataService
     private let apiServiceProvider: MoyaProvider<GoogleNewsEndpoint>
     
-    init(apiService: MoyaProvider<GoogleNewsEndpoint> = MoyaProvider<GoogleNewsEndpoint>(), dataService: DataService = RealmDataService.shared) {
+    init(apiService: MoyaProvider<GoogleNewsEndpoint> = MoyaProvider<GoogleNewsEndpoint>(plugins: [NetworkLoggerPlugin(verbose: true)]), dataService: DataService = RealmDataService.shared) {
         self.apiServiceProvider     = apiService
         self.dataServiceProvider    = dataService
     }
 }
 
 extension GoogleNewsAPI: GoogleNewsAPIService {
-    func getSources<T: Serializable>(_ targetType: T.Type, atKeyPath: String? =  nil) -> Observable<Bool> {
+    func getHealines<T>(_ targetType: T.Type) -> Observable<Bool> where T : Serializable {
+        return self.apiServiceProvider.rx
+            .request(GoogleNewsEndpoint.TopHeadlines)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .debug()
+            .asObservable()
+            .materialize()
+            .mapJSON()
+            .mapHeadlines()
+            .writeModels(using: self.dataServiceProvider, for: targetType)
+            .dematerialize()
+            .observeOn(MainScheduler.asyncInstance)
+    }
+    
+    func getSources<T: Serializable>(_ targetType: T.Type) -> Observable<Bool> {
         return self.apiServiceProvider.rx
             .request(GoogleNewsEndpoint.Sources)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
@@ -68,16 +83,13 @@ extension Observable where Element: EventConvertible {
             }
         }
     }
-}
-
-// Map JSON from API response
-extension Observable where Element: EventConvertible, Element.ElementType: Response {
-    func mapJSON() -> Observable<Event<JSON>> {
+    
+    func mapHeadlines() -> Observable<Event<[JSON]>> {
         return self.map { eventType in
             switch eventType.event {
-            case let .next(response):
-                if let json = try JSONSerialization.jsonObject(with: response.data, options: []) as? JSON {
-                    return Event.next(json)
+            case let .next(json):
+                if let dictionary = json as? JSON, let jsonArray = dictionary["articles"] as? [JSON] {
+                    return Event.next(jsonArray)
                 }
                 return Event.error(DataError.parsingError)
             case let .error(error):
@@ -88,41 +100,3 @@ extension Observable where Element: EventConvertible, Element.ElementType: Respo
         }
     }
 }
-
-extension Observable where Element: EventConvertible, Element.ElementType: Sequence {
-    func writeModels<T>(using dataService: DataService, for type: T.Type, atKeyPath: String? = nil) -> Observable<Event<Bool>> where T: Serializable {
-        return self.map { eventType in
-            switch eventType.event {
-            case let .next(array):
-                if let jsonArray =  array as? [JSON] {
-                    do {
-                        try dataService.writeAll(from: jsonArray, with: type)
-                        return Event.next(true)
-                    } catch {
-                        return Event.error(error)
-                    }
-                }
-                return Event.error(DataError.wrongCasting(#file))
-            case let .error(error):
-                return Event.error(error)
-            case .completed:
-                return Event.completed
-            }
-        }
-    }
-}
-
-extension Observable where Element: Sequence {
-    func writeModels<T>(using dataService: DataService, for type: T.Type, atKeyPath: String? = nil) -> Observable<Bool> where T: Serializable {
-        return self.do(onNext: { (array) in
-            if let jsonArray =  array as? [[String: Any]] {
-                do {
-                    try dataService.writeAll(from: jsonArray, with: type)
-                } catch {
-                    throw error
-                }
-            }
-        }).map{ _ in true }
-    }
-}
-

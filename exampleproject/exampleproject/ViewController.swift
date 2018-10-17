@@ -23,23 +23,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Make network call
-        apiService.getSources(Source.self)
+//        apiService.getSources(Source.self)
+//            .subscribe()
+//            .disposed(by: bag)
+
+        apiService.getHealines(Articles.self)
             .subscribe()
             .disposed(by: bag)
-
+        
         // Observe the data and consume it
         
-        dataService.observeFirst(Source.self)
-            .subscribe(onNext: { (source) in
-                print(source)
-            })
-            .disposed(by: bag)
-        
-        dataService.observeAll(Source.self)
-            .subscribe(onNext: { (sources) in
-                print("Loaded count: \(sources.count)")
-            })
-            .disposed(by: bag)
+//        dataService.observeFirst(Source.self)
+//            .subscribe(onNext: { (source) in
+//                print(source)
+//            })
+//            .disposed(by: bag)
+//        
+//        dataService.observeAll(Source.self)
+//            .subscribe(onNext: { (sources) in
+//                print("Loaded count: \(sources.count)")
+//            })
+//            .disposed(by: bag)
     }
 
 

@@ -29,24 +29,24 @@ class SourceRealm: Object {
     }
     
     private enum Field: String {
-        case Id             = "id"
-        case Name           = "name"
-        case Description    = "description"
-        case Url            = "url"
-        case Category       = "category"
-        case Language       = "language"
-        case Country        = "country"
+        case id             = "id"
+        case name           = "name"
+        case description    = "description"
+        case url            = "url"
+        case category       = "category"
+        case language       = "language"
+        case country        = "country"
     }
 }
 
 extension SourceRealm: Mappable {
     func mapping(map: Map) {
-        self.id         <- map[Field.Id.rawValue]
-        self.name       <- map[Field.Name.rawValue]
-        self.desc       <- map[Field.Description.rawValue]
-        self.url        <- map[Field.Url.rawValue]
-        self.category   <- map[Field.Category.rawValue]
-        self.language   <- map[Field.Language.rawValue]
-        self.country    <- map[Field.Country.rawValue]
+        self.id         <- map[Field.id.rawValue]
+        self.name       <- map[Field.name.rawValue]
+        self.desc       <- map[Field.description.rawValue]
+        self.url        <- map[Field.url.rawValue]
+        self.category   <- map[Field.category.rawValue]
+        self.language   <- map[Field.language.rawValue]
+        self.country    <- map[Field.country.rawValue]
     }
 }

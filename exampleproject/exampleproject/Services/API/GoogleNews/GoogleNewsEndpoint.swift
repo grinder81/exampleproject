@@ -45,7 +45,7 @@ extension GoogleNewsEndpoint: TargetType {
         case .Sources:
             return .requestPlain
         case .TopHeadlines:
-            return .requestPlain
+            return .requestParameters(parameters: ["country" : "us"], encoding: URLEncoding.default)
         }
     }
     

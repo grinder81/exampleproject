@@ -14,6 +14,9 @@
 		F804C0E0216BBE7D0034A65E /* SourceRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0DF216BBE7D0034A65E /* SourceRealm.swift */; };
 		F804C0E2216BE0E70034A65E /* RealmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0E1216BE0E70034A65E /* RealmDataService.swift */; };
 		F804C0E5216BE2EB0034A65E /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0E4216BE2EB0034A65E /* Source.swift */; };
+		F87F3A1721764CB5002CDC58 /* RxAPIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1621764CB5002CDC58 /* RxAPIExtension.swift */; };
+		F87F3A1921764E13002CDC58 /* Articles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1821764E13002CDC58 /* Articles.swift */; };
+		F87F3A1B21764F0D002CDC58 /* ArticlesRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1A21764F0D002CDC58 /* ArticlesRealm.swift */; };
 		F8BE9B25216A963100CDAB80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE9B24216A963100CDAB80 /* AppDelegate.swift */; };
 		F8BE9B27216A963100CDAB80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE9B26216A963100CDAB80 /* ViewController.swift */; };
 		F8BE9B2A216A963100CDAB80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8BE9B28216A963100CDAB80 /* Main.storyboard */; };
@@ -50,6 +53,9 @@
 		F804C0DF216BBE7D0034A65E /* SourceRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRealm.swift; sourceTree = "<group>"; };
 		F804C0E1216BE0E70034A65E /* RealmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataService.swift; sourceTree = "<group>"; };
 		F804C0E4216BE2EB0034A65E /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		F87F3A1621764CB5002CDC58 /* RxAPIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAPIExtension.swift; sourceTree = "<group>"; };
+		F87F3A1821764E13002CDC58 /* Articles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Articles.swift; sourceTree = "<group>"; };
+		F87F3A1A21764F0D002CDC58 /* ArticlesRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesRealm.swift; sourceTree = "<group>"; };
 		F8BE9B21216A963100CDAB80 /* exampleproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exampleproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BE9B24216A963100CDAB80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8BE9B26216A963100CDAB80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				F804C0DF216BBE7D0034A65E /* SourceRealm.swift */,
+				F87F3A1A21764F0D002CDC58 /* ArticlesRealm.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -148,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				F804C0E4216BE2EB0034A65E /* Source.swift */,
+				F87F3A1821764E13002CDC58 /* Articles.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				F804C0D7216AA6200034A65E /* GoogleNews */,
+				F87F3A1621764CB5002CDC58 /* RxAPIExtension.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -429,7 +438,10 @@
 				F804C0E0216BBE7D0034A65E /* SourceRealm.swift in Sources */,
 				F8BE9B27216A963100CDAB80 /* ViewController.swift in Sources */,
 				F8BE9B25216A963100CDAB80 /* AppDelegate.swift in Sources */,
+				F87F3A1B21764F0D002CDC58 /* ArticlesRealm.swift in Sources */,
+				F87F3A1721764CB5002CDC58 /* RxAPIExtension.swift in Sources */,
 				F804C0E2216BE0E70034A65E /* RealmDataService.swift in Sources */,
+				F87F3A1921764E13002CDC58 /* Articles.swift in Sources */,
 				F804C0D9216AAC110034A65E /* GoogleNewsAPI.swift in Sources */,
 				F804C0D6216A9BE90034A65E /* GoogleNewsEndpoint.swift in Sources */,
 				F804C0DC216BBE340034A65E /* DataService.swift in Sources */,
