@@ -42,7 +42,6 @@ extension GoogleNewsAPI: GoogleNewsAPIService {
         return self.apiServiceProvider.rx
             .request(GoogleNewsEndpoint.TopHeadlines)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-            .debug()
             .asObservable()
             .materialize()
             .mapJSON()
@@ -66,8 +65,8 @@ extension GoogleNewsAPI: GoogleNewsAPIService {
     }
 }
 
-// Mapping for source API JSON
 extension Observable where Element: EventConvertible {
+    // Mapping for source API JSON
     func mapSources() -> Observable<Event<[JSON]>> {
         return self.map { eventType in
             switch eventType.event {
@@ -84,6 +83,7 @@ extension Observable where Element: EventConvertible {
         }
     }
     
+    // Mapping for headlines API JSON
     func mapHeadlines() -> Observable<Event<[JSON]>> {
         return self.map { eventType in
             switch eventType.event {

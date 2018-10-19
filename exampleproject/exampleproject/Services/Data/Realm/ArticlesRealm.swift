@@ -37,10 +37,23 @@ class ArticlesRealm: Object {
         case publishedAt    = "publishedAt"
         case content        = "content"
     }
+    
+    fileprivate let utcDateTransform = TransformOf<Date, String>(fromJSON: { (value) -> Date? in
+        guard let date = value else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter.date(from: date)
+    }) { (value) -> String? in
+        guard let date = value else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter.string(from: date)
+    }
 }
 
 
 extension ArticlesRealm: Mappable {
+    
     func mapping(map: Map) {
         self.author         <- map[Field.author.rawValue]
         self.title          <- map[Field.title.rawValue]
@@ -48,11 +61,6 @@ extension ArticlesRealm: Mappable {
         self.url            <- map[Field.url.rawValue]
         self.urlToImage     <- map[Field.urlToImage.rawValue]
         self.content        <- map[Field.content.rawValue]
-        
-        if let date = map[Field.publishedAt.rawValue].currentValue as? String {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            self.publishedAt = formatter.date(from: date)
-        }
+        self.publishedAt    <- (map[Field.publishedAt.rawValue], utcDateTransform)
     }
 }

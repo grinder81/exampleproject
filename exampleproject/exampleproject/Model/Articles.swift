@@ -20,18 +20,19 @@ struct Articles: Codable {
 }
 
 extension Articles: Serializable {
+    init?(data: Data) {
+        guard let article = try? JSONDecoder().decode(Articles.self, from: data) else {
+            return nil
+        }
+        self.init(author: article.author, title: article.title, description: article.description, url: article.url, urlToImage: article.urlToImage, publishedAt: article.publishedAt, content: article.content)
+    }
+    
     init?(jsonString: String) {
         guard let data = jsonString.data(using: .utf8), let article = try? JSONDecoder().decode(Articles.self, from: data) else {
             return nil
         }
 
-        self.author         = article.author
-        self.title          = article.title
-        self.description    = article.description
-        self.url            = article.url
-        self.urlToImage     = article.urlToImage
-        self.publishedAt    = article.publishedAt
-        self.content        = article.content
+        self.init(author: article.author, title: article.title, description: article.description, url: article.url, urlToImage: article.urlToImage, publishedAt: article.publishedAt, content: article.content)
     }
     
     init?(type: Object) {

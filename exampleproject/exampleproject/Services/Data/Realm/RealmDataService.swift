@@ -113,6 +113,23 @@ final class RealmDataService: DataService {
         }
     }
     
+    
+    func convert<T>(from jsonArray: [JSON], to targetType: T.Type) throws -> Result<[T]> where T : Serializable {
+        do {
+            let models = try jsonArray.map { (dictionary) -> T in
+                if let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: []),
+                    let model = targetType.init(data: jsonData) {
+                    return model
+                } else {
+                    throw DataError.parsingError
+                }
+            }
+            return .success(models)
+        } catch {
+            return .failure(DataError.parsingError)
+        }
+    }
+    
     private func writeModel<T: Object>(_ model: T, synchronous: Bool = false) {
         let update = {
             let realm = try! Realm()
