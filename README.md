@@ -1,2 +1,2 @@
 # exampleproject
-Good development pattern example
+Details coming
