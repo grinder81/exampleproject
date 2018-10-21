@@ -10,13 +10,13 @@ import Foundation
 import RealmSwift
 
 struct Articles: Codable {
-    let author: String
-    let title: String
-    let description: String
+    let author: String?
+    let title: String?
+    let description: String?
     let url: URL?
     let urlToImage: URL?
-    let publishedAt: Date
-    let content: String
+    let publishedAt: Date?
+    let content: String?
 }
 
 extension Articles: Serializable {
@@ -42,8 +42,8 @@ extension Articles: Serializable {
         self.author         = article.author
         self.title          = article.title
         self.description    = article.description
-        self.url            = URL(string: article.url)
-        self.urlToImage     = URL(string: article.urlToImage)
+        self.url            = URL(string: article.url ?? "")
+        self.urlToImage     = URL(string: article.urlToImage ?? "")
         self.publishedAt    = article.publishedAt
         self.content        = article.content
     }

@@ -11,13 +11,13 @@ import ObjectMapper
 import Moya_ObjectMapper
 
 class ArticlesRealm: Object {
-    @objc dynamic var author: String!
-    @objc dynamic var title: String!
-    @objc dynamic var desc: String!
-    @objc dynamic var url: String!
-    @objc dynamic var urlToImage: String!
-    @objc dynamic var publishedAt: Date!
-    @objc dynamic var content: String!
+    @objc dynamic var author: String?
+    @objc dynamic var title: String?
+    @objc dynamic var desc: String?
+    @objc dynamic var url: String?
+    @objc dynamic var urlToImage: String?
+    @objc dynamic var publishedAt: Date?
+    @objc dynamic var content: String?
     
     required convenience init?(map: Map) {
         self.init()
