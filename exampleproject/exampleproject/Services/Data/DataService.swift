@@ -22,6 +22,15 @@ enum Result<T> {
     case failure(Swift.Error)
 }
 
+extension Result {
+    // When you need to produce one Result type to another Result type
+    func map<U>(_ transform: (T) -> Result<U>) -> Result<U> {
+        switch self {
+        case let .success(value): return transform(value)
+        case let .failure(error): return .failure(error)
+        }
+    }
+}
 
 protocol DataService {
     func convert<T: Serializable>(from jsonArray: [JSON], to targetType: T.Type) throws -> Result<[T]>

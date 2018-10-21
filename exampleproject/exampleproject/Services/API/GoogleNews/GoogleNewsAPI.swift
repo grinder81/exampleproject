@@ -24,7 +24,7 @@ let GoogleNewsEnv = GoogleNewsSettings(
 
 protocol GoogleNewsAPIService {
     func getSources<T: Serializable>(_ targetType: T.Type) -> Observable<Bool>
-    func getHealines<T: Serializable>(_ targetType: T.Type) -> Observable<Bool>
+    func getHeadlines<T: Serializable>(_ targetType: T.Type) -> Observable<Bool>
 }
 
 final class GoogleNewsAPI {
@@ -38,7 +38,7 @@ final class GoogleNewsAPI {
 }
 
 extension GoogleNewsAPI: GoogleNewsAPIService {
-    func getHealines<T>(_ targetType: T.Type) -> Observable<Bool> where T : Serializable {
+    func getHeadlines<T>(_ targetType: T.Type) -> Observable<Bool> where T : Serializable {
         return self.apiServiceProvider.rx
             .request(GoogleNewsEndpoint.TopHeadlines)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
