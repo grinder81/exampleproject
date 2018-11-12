@@ -27,7 +27,7 @@ extension Source: Serializable {
         }
         self.id             = source.id
         self.name           = source.name
-        self.description    = source.description
+        self.description    = source.desc
         self.url            = source.url
         self.category       = source.category
         self.language       = source.language
