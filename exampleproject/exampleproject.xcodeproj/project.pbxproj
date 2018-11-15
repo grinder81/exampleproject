@@ -14,6 +14,10 @@
 		F804C0E0216BBE7D0034A65E /* SourceRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0DF216BBE7D0034A65E /* SourceRealm.swift */; };
 		F804C0E2216BE0E70034A65E /* RealmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0E1216BE0E70034A65E /* RealmDataService.swift */; };
 		F804C0E5216BE2EB0034A65E /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = F804C0E4216BE2EB0034A65E /* Source.swift */; };
+		F874BB20219C8F0200E8DF5A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F874BB1F219C8F0200E8DF5A /* AppState.swift */; };
+		F874BB22219C8F1700E8DF5A /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F874BB21219C8F1700E8DF5A /* Feature.swift */; };
+		F874BB27219E0D3200E8DF5A /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F874BB26219E0D3200E8DF5A /* Landing.storyboard */; };
+		F874BB29219E0D4600E8DF5A /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F874BB28219E0D4600E8DF5A /* LandingViewController.swift */; };
 		F87F3A1721764CB5002CDC58 /* RxAPIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1621764CB5002CDC58 /* RxAPIExtension.swift */; };
 		F87F3A1921764E13002CDC58 /* Articles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1821764E13002CDC58 /* Articles.swift */; };
 		F87F3A1B21764F0D002CDC58 /* ArticlesRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F3A1A21764F0D002CDC58 /* ArticlesRealm.swift */; };
@@ -53,6 +57,11 @@
 		F804C0DF216BBE7D0034A65E /* SourceRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRealm.swift; sourceTree = "<group>"; };
 		F804C0E1216BE0E70034A65E /* RealmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataService.swift; sourceTree = "<group>"; };
 		F804C0E4216BE2EB0034A65E /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		F874BB1F219C8F0200E8DF5A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		F874BB21219C8F1700E8DF5A /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		F874BB23219CB64200E8DF5A /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
+		F874BB26219E0D3200E8DF5A /* Landing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Landing.storyboard; sourceTree = "<group>"; };
+		F874BB28219E0D4600E8DF5A /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		F87F3A1621764CB5002CDC58 /* RxAPIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAPIExtension.swift; sourceTree = "<group>"; };
 		F87F3A1821764E13002CDC58 /* Articles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Articles.swift; sourceTree = "<group>"; };
 		F87F3A1A21764F0D002CDC58 /* ArticlesRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesRealm.swift; sourceTree = "<group>"; };
@@ -109,6 +118,7 @@
 		F804C0D4216A9BAA0034A65E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F874BB1E219C8EE000E8DF5A /* FeatureFlag */,
 				F892775D216FC079008A4815 /* API */,
 				F804C0DA216BBDE00034A65E /* Data */,
 			);
@@ -160,6 +170,42 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F874BB1E219C8EE000E8DF5A /* FeatureFlag */ = {
+			isa = PBXGroup;
+			children = (
+				F874BB1F219C8F0200E8DF5A /* AppState.swift */,
+				F874BB21219C8F1700E8DF5A /* Feature.swift */,
+			);
+			path = FeatureFlag;
+			sourceTree = "<group>";
+		};
+		F874BB2A219E0D8600E8DF5A /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				F874BB2C219E0D9D00E8DF5A /* TopHeadlines */,
+				F874BB2B219E0D9500E8DF5A /* Landing */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		F874BB2B219E0D9500E8DF5A /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				F874BB26219E0D3200E8DF5A /* Landing.storyboard */,
+				F874BB28219E0D4600E8DF5A /* LandingViewController.swift */,
+			);
+			path = Landing;
+			sourceTree = "<group>";
+		};
+		F874BB2C219E0D9D00E8DF5A /* TopHeadlines */ = {
+			isa = PBXGroup;
+			children = (
+				F8BE9B26216A963100CDAB80 /* ViewController.swift */,
+				F8BE9B28216A963100CDAB80 /* Main.storyboard */,
+			);
+			path = TopHeadlines;
+			sourceTree = "<group>";
+		};
 		F892775D216FC079008A4815 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,12 +242,12 @@
 			children = (
 				F804C0E3216BE2D90034A65E /* Model */,
 				F804C0D4216A9BAA0034A65E /* Services */,
+				F874BB2A219E0D8600E8DF5A /* Features */,
 				F8BE9B24216A963100CDAB80 /* AppDelegate.swift */,
-				F8BE9B26216A963100CDAB80 /* ViewController.swift */,
-				F8BE9B28216A963100CDAB80 /* Main.storyboard */,
 				F8BE9B2B216A963300CDAB80 /* Assets.xcassets */,
 				F8BE9B2D216A963300CDAB80 /* LaunchScreen.storyboard */,
 				F8BE9B30216A963300CDAB80 /* Info.plist */,
+				F874BB23219CB64200E8DF5A /* Example-Bridging-Header.h */,
 			);
 			path = exampleproject;
 			sourceTree = "<group>";
@@ -340,6 +386,7 @@
 			files = (
 				F8BE9B2F216A963300CDAB80 /* LaunchScreen.storyboard in Resources */,
 				F8BE9B2C216A963300CDAB80 /* Assets.xcassets in Resources */,
+				F874BB27219E0D3200E8DF5A /* Landing.storyboard in Resources */,
 				F8BE9B2A216A963100CDAB80 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +440,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-exampleproject/Pods-exampleproject-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DarklyEventSource/DarklyEventSource.framework",
+				"${BUILT_PRODUCTS_DIR}/LaunchDarkly/LaunchDarkly.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya-ObjectMapper/Moya_ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -410,6 +459,8 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DarklyEventSource.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LaunchDarkly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya_ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -442,8 +493,11 @@
 				F87F3A1721764CB5002CDC58 /* RxAPIExtension.swift in Sources */,
 				F804C0E2216BE0E70034A65E /* RealmDataService.swift in Sources */,
 				F87F3A1921764E13002CDC58 /* Articles.swift in Sources */,
+				F874BB29219E0D4600E8DF5A /* LandingViewController.swift in Sources */,
+				F874BB20219C8F0200E8DF5A /* AppState.swift in Sources */,
 				F804C0D9216AAC110034A65E /* GoogleNewsAPI.swift in Sources */,
 				F804C0D6216A9BE90034A65E /* GoogleNewsEndpoint.swift in Sources */,
+				F874BB22219C8F1700E8DF5A /* Feature.swift in Sources */,
 				F804C0DC216BBE340034A65E /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,6 +610,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "exampleproject/Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -610,6 +665,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "exampleproject/Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};

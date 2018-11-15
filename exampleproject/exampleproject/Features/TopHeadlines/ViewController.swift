@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         tableView.addSubview(headerView)
         tableView.contentInset = UIEdgeInsets(top: kTablevHeaderHight, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -kTablevHeaderHight)
-        updateHeaderView()
+        updateHeaderView()        
     }
 
     fileprivate var dataCount: Int {

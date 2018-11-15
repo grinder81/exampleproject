@@ -18,5 +18,6 @@ target 'exampleproject' do
     pod 'RxRealm'
     pod 'Moya-ObjectMapper/RxSwift'
     
+    pod 'LaunchDarkly'
 end
 
